@@ -1,0 +1,23 @@
+{
+  "name": "uentrega",
+  "version": "1.0.0",
+  "description": "Trabalho de ES",
+  "main": "(first.js)",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/vmwatanabe/uentrega.git"
+  },
+  "author": "Victor Watanabe",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/vmwatanabe/uentrega/issues"
+  },
+  "homepage": "https://github.com/vmwatanabe/uentrega#readme",
+  "dependencies": {
+    "ejs": "^2.5.7",
+    "express": "^4.16.2"
+  }
+}
