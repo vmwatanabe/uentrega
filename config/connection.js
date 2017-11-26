@@ -3,7 +3,7 @@ var mongo = require('mongodb');
 var connMongoDB = function(){
     console.log("Entrou na connexão");
     var db = new mongo.Db(
-        'got',
+        'uentrega',
         new mongo.Server(
             'localhost',
             27017,
