@@ -37,6 +37,7 @@ userDAO.prototype.auth = function (user, req, res){
                     req.session.auth = true;
                     req.session.entregador = result[0].entregador;
                     req.session.name = result[0].name;
+                    req.session.email = result[0].email;
                 }
                 if (req.session.auth == true){
                     if (req.session.entregador == 1){

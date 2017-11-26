@@ -6,6 +6,24 @@ var app = require('./config/server');
 // var rotaSignup = require('./app/routes/signup')(app);
 
 
-app.listen(3000, function(){
-    console.log("ae karai");
+var server = app.listen(3000, function(){
+    console.log("Servidor online");
+});
+
+var io = require('socket.io').listen(server);
+
+app.set('io', io);
+
+io.on('connection', function(socket){
+    console.log("Usuário conectado.");
+    socket.on('disconnect', function(){
+        console.log('Usuário desconectado.');
+    });
+    socket.on('entregadorPronto', function(data){
+        console.log("ayy");
+        app.get('io').emit(
+            'teste',
+            'data'
+        );
+    });
 });

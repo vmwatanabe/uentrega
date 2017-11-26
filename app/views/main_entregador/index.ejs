@@ -34,7 +34,7 @@
             <div class="col-sm">
                 <h1>Deseja fazer uma entrega?</h1>
                 <form>
-                    <button type="submit" class="btn btn-primary">Estou pronto!</button>
+                    <button type="button" id="readyEntregador" class="btn btn-primary" data-email="<%=session.email%>">Estou pronto!</button>
                 </form>
             </div>
         </div>
@@ -50,6 +50,20 @@
                     window.location.href = '/logout';
                 });
             })
-        </script>
+    </script>
+    <script src="/socket.io/socket.io.js"></script>
+    <script>
+        var socket = io('http://localhost:3000');
+        $('#readyEntregador').on("click", function(){
+            console.log("click");
+            socket.emit(
+                'entregadorPronto',
+                'aeae'
+            );
+        });
+        socket.on('teste', function(data){
+            alert(data);
+        });
+    </script>
 </body>
 </html>
