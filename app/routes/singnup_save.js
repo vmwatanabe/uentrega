@@ -7,7 +7,6 @@ module.exports = function(application){
             res.send(result);
         }); */
         var userDAO = new application.app.models.model_postUsu(connection);
-        userDAO.insertUser(dados);
-        res.send("ae");
+        userDAO.insertUser(dados, req, res);
     });
 }

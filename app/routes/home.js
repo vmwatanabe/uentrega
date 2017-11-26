@@ -3,4 +3,8 @@ module.exports = function(app){
         var data;
         res.render("home/home", {validation: {}});
     });
+    app.get('/', function(req, res){
+        var data;
+        res.render("home/home", {validation: {}});
+    });
 }

@@ -10,11 +10,19 @@ function userDAO(connection){
     this._connection = connection();
 }
 
-userDAO.prototype.insertUser = function (user){
+userDAO.prototype.insertUser = function (user, req, res){
     console.log(user);
     this._connection.open(function(err, mongocli){
         mongocli.collection("user", function(err, collection){
             collection.insert(user);
+            req.session.auth = true;
+            req.session.entregador = user.entregador;
+            req.session.name = user.name;
+            if (req.session.entregador == 1){
+                res.redirect("/main_entregador");
+            }else{
+                res.redirect("/main");
+            }
             mongocli.close();
         });
     });
