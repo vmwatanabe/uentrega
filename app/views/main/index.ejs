@@ -1,7 +1,7 @@
 <!doctype html>
 <html lang="en">
   <head>
-    <title>Hello, world!</title>
+    <title>UEntrega</title>
     <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -12,7 +12,7 @@
 </head>
   <body>
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
-        <a class="navbar-brand" href="#">Navbar</a>
+        <a class="navbar-brand" href="#">UEntrega</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
@@ -23,33 +23,38 @@
                         Bem vindo, <%=session.name%>
                     </a>
                     <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink"> 
-                        <button id="btn_logout" type="button" class="btn btn-primary">Sair</button>
+                        <div style="padding: 10px; min-width:300px;">
+                        <button id="btn_logout" type="button" class="btn btn-primary btn-block">Sair</button>
+                        </div>
                     </div>
                 </li>
             </ul>
         </div>
     </nav>
-    <div class="container-fluid">
+    <div class="container-fluid bgz">
+        <div class="bgz">
         <div class="row">
-            <div class="col-sm">
-                <h1>Precisa de uma entrega?</h1>
+            
+            <div class="col-sm"></div>
+            <div class="col-sm center-block" style="padding-top:5%;">
+                <h1 class="text-center">Precisa de uma entrega?</h1>
                 <div id="containerCli">
                 <form>
                     <div class="form-group">
-                        <label for="addressUsu">Digite o local em que o pedido será buscado</label>
+                        <label class="text-center" for="addressUsu">Digite o local em que o pedido será buscado</label>
                         <input type="text" class="form-control" id="addressUsu">
                     </div>
                     <div class="form-group">
                         <label for="addressUsu2">Digite o local em que o pedido será entregue</label>
                         <input type="text" class="form-control" id="addressUsu2">
                     </div>
-                    <button type="button" id="pedirMotorista" data-email="<%=session.email%>" class="btn btn-primary">Peça um motorista!</button>
+                    <button type="button" id="pedirMotorista" data-email="<%=session.email%>" class="btn btn-block btn-primary">Peça um motorista!</button>
                 </form>
                 </div>
             </div>
-            <div class="col-sm">
-                <h1>Seu histórico de pedidos</h1>
-            </div>
+            
+            <div class="col-sm"></div>
+        </div>
         </div>
     </div>
     <!-- Optional JavaScript -->
@@ -77,25 +82,32 @@
                 'clientePronto',
                 {email: email, end1: $('#addressUsu').val(), end2: $('#addressUsu2').val()}
             );
+            $(event.target).attr("disabled", true);
         });
         socket.on(aux, function(data){
             var aux = '';
-            aux += '<div> <h4 id="emailEnt">'+data+'</h4><br><h5> está a caminho!</h5></div> <div id="containerVerifica"></div>';
+            aux += '<div> <br> <h6 class="text-center" id="emailEnt">'+data+'</h6><h6 class="class="text-center"> está a caminho!</h6></div> <div id="containerVerifica"></div>';
             $('#containerCli').append(aux);
         });
         
         socket.on('confirmCliente', function(data){
             var aux = '';
-            aux += '<div> <h4 id="emailEnt">'+data+'</h4><br><h5> está a caminho!</h5></div> <div id="containerVerifica"></div>';
+            aux += '<div> <br> <h6 class="text-center" id="emailEnt">'+data+'</h6><br><h6 class="text-center"> está a caminho!</h6></div> <div id="containerVerifica"></div>';
             $('#containerCli').append(aux);
         });
         socket.on('arrive'+email, function(){
-            var aux = '<div> <button type="button" class="btn btn-primary" id="clienteConfirma">O entregador chegou ao endereço</button> <button id="clienteCancela" type="button" class="btn btn-primary">Cancelar viagem</button> </div> <div id="containerConfirmaEntrega"></div>'
+            var aux = '<div> <h6 class="text-center">O entregador relatou a chegada ao endereço inicial!</h6><br><button type="button" class="btn btn-primary btn-block" id="clienteConfirma">O entregador chegou ao endereço</button> <button id="clienteCancela" type="button" class="btn-block btn btn-primary">Cancelar viagem</button> </div> <div id="containerConfirmaEntrega"></div>'
             $('#containerVerifica').append(aux);
         });
         socket.on('entregou'+email, function(){
-            var aux = '<div> <button type="button" class="btn btn-primary" id="confirmaEntrega">Finalizar com sucesso</button> <button id="problemaEntrega" type="button" class="btn btn-primary">Houve um problema</button> </div>'
+            var aux = '<div> <h6 class="text-center"> O motorista entregou o pedido! </h6><button type="button" class="btn-block btn btn-primary" id="confirmaEntrega">Finalizar com sucesso</button> <button id="problemaEntrega" type="button" class="btn-block btn btn-primary">Houve um problema</button> </div>'
             $('#containerConfirmaEntrega').append(aux);
+        });
+        socket.on('entregadorCancelou'+email, function(){
+            alert("O entregador cancelou a entrega.");
+            $('#containerCli').empty();
+            var s = '<div><h6 class="text-center">Pedido cancelado pelo entregador!</h6></div>'
+            $('#containerCli').append(s);
         });
         $('body').delegate("#clienteConfirma","click", function(){
             var emailent = $('#emailEnt').text();
@@ -103,11 +115,36 @@
                 'clienteConfirmou',
                 emailent
             );
+            $('#clienteCancela').attr("disabled", true);
+            $('#clienteConfirma').attr("disabled", true);
         });
         $('body').delegate("#confirmaEntrega","click", function(){
             var emailent = $('#emailEnt').text();
             socket.emit(
                 'clienteConfirmouEntrega',
+                emailent
+            );
+            $('#containerCli').empty();
+            var s = '<div><h6 class="text-center">Você completou o seu pedido!</h6></div>'
+            $('#containerCli').append(s);
+        });
+        $('body').delegate("#clienteCancela","click", function(){
+            var emailent = $('#emailEnt').text();
+            $('#containerCli').empty();
+            var s = '<div><h6 class="text-center">Você cancelou o seu pedido!</h6></div>'
+            $('#containerCli').append(s);
+            socket.emit(
+                'clienteCancela',
+                emailent
+            );
+        });
+        $('body').delegate("#problemaEntrega","click", function(){
+            var emailent = $('#emailEnt').text();
+            $('#containerCli').empty();
+            var s = '<div><h6 class="text-center">Você relatou um problema com o seu pedido! Entre em contato conosco!</h6></div>'
+            $('#containerCli').append(s);
+            socket.emit(
+                'clienteCancela',
                 emailent
             );
         });

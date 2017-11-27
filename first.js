@@ -90,4 +90,16 @@ io.on('connection', function(socket){
         console.log(aux);
         socket.broadcast.emit(aux, data);
     });
+    socket.on('clienteCancela', function(data){
+        console.log('cliente cancelou');
+        var aux = 'clienteCancelou'+data;
+        console.log(aux);
+        socket.broadcast.emit(aux, data);
+    });
+    socket.on('entregadorCancela', function(data){
+        console.log('entregador cancelou');
+        var aux = 'entregadorCancelou'+data;
+        console.log(aux);
+        socket.broadcast.emit(aux, data);
+    });
 });
