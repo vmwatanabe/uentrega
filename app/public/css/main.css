@@ -1,0 +1,35 @@
+.btn-primary{
+	
+	background-color: black;
+	border-color: black;
+}
+
+.btn{
+	font-size: 2rem;
+	margin-top: 10%;
+}
+
+.col-sm{
+	height: 100vh;
+}
+.container-fluid{
+	background-image: 
+}
+
+#entrega{
+	background-image: url("../img/caixa.jpg");
+	background-size: cover;
+	font-size: 1.5rem;
+	font-weight:700;
+}
+
+.titulo{
+	margin-top: 10%;
+	font-size: 2.5rem;
+	margin-bottom: 20%;
+	font-weight: bold;	
+}
+
+#pedidos{
+	
+}

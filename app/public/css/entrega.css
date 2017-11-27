@@ -1,0 +1,30 @@
+.btn-primary{
+	background-color: black;
+	border-color: black;
+}
+
+.btn{
+	font-size: 2.5rem;
+}
+
+#entrega{
+	text-align: center;
+	background-image: url("../img/entregando.jpeg");
+	background-size: cover;
+	font-size: 1.5rem;
+	font-weight:700;
+	color: white;
+
+}
+
+.col-sm{
+	height: 100vh;
+}
+
+
+#titulo{
+	margin-top: 20%;
+	font-size: 3.5rem;
+	margin-bottom: 10%;
+	font-weight: bold;	
+}

@@ -70,14 +70,23 @@
         });
         socket.on(aux, function(data){
             var aux = '';
-            aux += '<div> <h4 id="emailCli">'+data.email+'</h4> <br> <h5>Partida: '+data.end1+'</h5><br><h5>Chegada: '+data.end2+'</h5><br><button type="button" class="btn btn-primary" id="entregadorChegou">Cheguei no endereço</button> <button id="entregadorCancelou" type="button" class="btn btn-primary">Cancelar viagem</button></div>';
+            aux += '<div> <h4 id="emailCli">'+data.email+'</h4> <br> <h5>Partida: '+data.end1+'</h5><br><h5>Chegada: '+data.end2+'</h5><br><button type="button" class="btn btn-primary" id="entregadorChegou">Cheguei no endereço</button> <button id="entregadorCancelou" type="button" class="btn btn-primary">Cancelar viagem</button></div> <div id="containerEntConf"></div>';
             $('#containerEnt').append(aux);
         });
         
         socket.on('confirmEntregador', function(data){
             var aux = '';
-            aux += '<div> <h4 id="emailCli">'+data.email+'</h4> <br> <h5>Partida: '+data.end1+'</h5><br><h5>Chegada: '+data.end2+'</h5><br><button type="button" class="btn btn-primary" id="entregadorChegou">Cheguei no endereço</button> <button id="entregadorCancelou" type="button" class="btn btn-primary">Cancelar viagem</button></div>';
+            aux += '<div> <h4 id="emailCli">'+data.email+'</h4> <br> <h5>Partida: '+data.end1+'</h5><br><h5>Chegada: '+data.end2+'</h5><br><button type="button" class="btn btn-primary" id="entregadorChegou">Cheguei no endereço</button> <button id="entregadorCancelou" type="button" class="btn btn-primary">Cancelar viagem</button></div> <div id="containerEntConf"></div>';
             $('#containerEnt').append(aux);
+        });
+        aux = 'confirm'+email;
+        socket.on(aux, function(data){
+            var aux = '<br><div><h6>Dirija-se ao destino</h6><button type="button" class="btn btn-primary" id="entregadorEntregou">Cheguei no destino</button><button id="entregadorCancelouEntrega" type="button" class="btn btn-primary">Cancelar viagem</button></div></div>'
+            $('#containerEntConf').append(aux);
+        });
+        aux = 'confirmatudo'+email;
+        socket.on(aux, function(data){
+            alert("O cliente concluiu com sucesso a entrega.");
         });
         $('body').delegate("#entregadorChegou","click", function(){
             var emailcli = $('#emailCli').text();
@@ -86,9 +95,14 @@
                 emailcli
             );
         });
-        socket.on('confirm'+email, function(data){
-            alert("cliente confirmou");
+        $('body').delegate("#entregadorEntregou","click", function(){
+            var emailcli = $('#emailCli').text();
+            socket.emit(
+                'entregadorEntregou',
+                emailcli
+            );
         });
+        
     </script>
 </body>
 </html>

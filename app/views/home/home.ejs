@@ -8,10 +8,11 @@
 
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css" integrity="sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb" crossorigin="anonymous">
+  	<link rel="stylesheet" href="/css/home.css" >
   </head>
   <body>
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
-        <a class="navbar-brand" href="#">Navbar</a>
+        <a class="navbar-brand" href="#">SendApp</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
@@ -56,14 +57,14 @@
             </div>
         <% } %>
         <div class="row">
-            <div class="col-sm">
+            <div class="col-sm" id = "usuario">
                 <h1>Seja um usuário</h1>
-                <h3>e pare de se preocupar com entregas!</h3>
-                    <button type="button" id="btn_cadastrar" class="btn btn-primary">Se cadastre como um usuário</button>
+                <br><br><br><br>
+                <button type="button" id="btn_cadastrar" class="btn btn-primary">Se cadastre como um usuário</button>
             </div>
-            <div class="col-sm">
+            <div class="col-sm" id ="entregador">
                 <h1>Seja um entregador</h1>
-                <h3>e ganhe dinheiro no seu tempo livre!</h3>
+                <br><br><br><br>
                 <button type="button" id="btn_cadastrar_entregador" class="btn btn-primary">Se cadastre como um entregador!</button>
             </div>
         </div>
@@ -74,6 +75,9 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js" integrity="sha384-vFJXuSJphROIrBnz7yo7oB41mKfc8JzQZiCq4NCceLEaO4IHwicKwpJf9c9IpFgh" crossorigin="anonymous"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js" integrity="sha384-alpBpkh1PFOepccYVYDB4do5UnbKysX5WZXm3XxPqe5iKTfUKjNkCk9SaVuEZflJ" crossorigin="anonymous"></script>
     <script>
+
+      
+
         $(document).ready(function(){
             $('#btn_cadastrar').on("click", function(){
                 window.location.href = '/signup';

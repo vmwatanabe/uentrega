@@ -57,6 +57,19 @@ io.on('connection', function(socket){
     socket.on('clienteConfirmou', function(data){
         console.log('cliente confirmou chegou');
         var aux = 'confirm'+data;
+        console.log(aux);
+        socket.broadcast.emit(aux, data);
+    });
+    socket.on('entregadorEntregou', function(data){
+        console.log('Entregador entregou');
+        var aux = 'entregou'+data;
+        console.log(aux);
+        socket.broadcast.emit(aux, data);
+    });
+    socket.on('clienteConfirmouEntrega', function(data){
+        console.log('cliente confirmou entrega');
+        var aux = 'confirmatudo'+data;
+        console.log(aux);
         socket.broadcast.emit(aux, data);
     });
 });

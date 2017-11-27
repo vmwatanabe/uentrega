@@ -45,7 +45,6 @@
                     </div>
                     <button type="button" id="pedirMotorista" data-email="<%=session.email%>" class="btn btn-primary">Peça um motorista!</button>
                 </form>
-                <div id="containerVerifica"></div>
                 </div>
             </div>
             <div class="col-sm">
@@ -81,23 +80,34 @@
         });
         socket.on(aux, function(data){
             var aux = '';
-            aux += '<div> <h4 id="emailEnt">'+data+'</h4><br><h5> está a caminho!</h5></div>';
+            aux += '<div> <h4 id="emailEnt">'+data+'</h4><br><h5> está a caminho!</h5></div> <div id="containerVerifica"></div>';
             $('#containerCli').append(aux);
         });
         
         socket.on('confirmCliente', function(data){
             var aux = '';
-            aux += '<div> <h4>'+data+'</h4><br><h5> está a caminho!</h5></div>';
+            aux += '<div> <h4 id="emailEnt">'+data+'</h4><br><h5> está a caminho!</h5></div> <div id="containerVerifica"></div>';
             $('#containerCli').append(aux);
         });
         socket.on('arrive'+email, function(){
-            var aux = '<div> <button type="button" class="btn btn-primary" id="clienteConfirma">O entregador chegou ao endereço</button> <button id="clienteCancela" type="button" class="btn btn-primary">Cancelar viagem</button> </div>'
+            var aux = '<div> <button type="button" class="btn btn-primary" id="clienteConfirma">O entregador chegou ao endereço</button> <button id="clienteCancela" type="button" class="btn btn-primary">Cancelar viagem</button> </div> <div id="containerConfirmaEntrega"></div>'
             $('#containerVerifica').append(aux);
+        });
+        socket.on('entregou'+email, function(){
+            var aux = '<div> <button type="button" class="btn btn-primary" id="confirmaEntrega">Finalizar com sucesso</button> <button id="problemaEntrega" type="button" class="btn btn-primary">Houve um problema</button> </div>'
+            $('#containerConfirmaEntrega').append(aux);
         });
         $('body').delegate("#clienteConfirma","click", function(){
             var emailent = $('#emailEnt').text();
             socket.emit(
                 'clienteConfirmou',
+                emailent
+            );
+        });
+        $('body').delegate("#confirmaEntrega","click", function(){
+            var emailent = $('#emailEnt').text();
+            socket.emit(
+                'clienteConfirmouEntrega',
                 emailent
             );
         });

@@ -1,0 +1,27 @@
+#formulario{
+	
+	font-size: 1.5rem;
+
+}
+
+body{
+	background-image: url("../img/signup.jpeg");
+	background-size: 100% 130%;
+	margin-bottom: 0;
+	padding-bottom: 0;
+}
+
+.btn-primary{
+	background-color: black;
+	border-color: black;
+}
+
+
+.col-sm{
+	height: 100vh;
+}
+
+
+.btn{
+	font-size: 2rem;
+}

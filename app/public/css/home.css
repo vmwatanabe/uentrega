@@ -1,0 +1,37 @@
+#usuario{
+	background-image: url("../img/Entrega.jpeg");
+	background-size: cover;
+	text-align: center;
+	padding-top: 20%;
+
+}
+
+
+
+#entregador{
+	background-image: url("../img/Pedido.jpeg");
+	background-size: cover;
+	text-align: center;
+	padding-top: 20%;
+
+}
+
+
+.col-sm{
+	height: 100vh;
+}
+
+.btn{
+	font-size: 2rem;
+}
+
+.btn-primary{
+	background-color: black;
+	border-color: black;
+}
+
+.bg-light{
+	background-color: black;
+
+}
+
