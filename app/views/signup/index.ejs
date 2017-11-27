@@ -8,6 +8,7 @@
 
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css" integrity="sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb" crossorigin="anonymous">
+    <link rel="stylesheet" href="../css/singup.css">
   </head>
   <body>
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
@@ -44,10 +45,11 @@
             </ul>
         </div>
     </nav>
-    <div class="container-fluid">
+    <div class="container-fluid" id = "formulario">
         <div class="row">
             <div class="col-sm">
                 <h1>Cadastre-se e comece hoje mesmo!</h1>
+                <br><br>
                 <form action="/signup/save" method="post">
                     <div class="form-group">
                         <label for="inputNameUsu">Nome</label>
@@ -69,6 +71,7 @@
                         <label for="inputPassword2">Confirme sua senha</label>
                         <input type="password" class="form-control" id="inputPassword2" placeholder="Password">
                     </div>
+                    <br>
                     <button type="submit" class="btn btn-primary">Cadastrar</button>
                 </form>
             </div>

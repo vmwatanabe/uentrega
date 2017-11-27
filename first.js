@@ -17,6 +17,8 @@ app.set('io', io);
 var cli = [];
 var ent = [];
 
+var objaux;
+
 io.on('connection', function(socket){
     console.log("Usuário conectado.");
     socket.on('disconnect', function(){
@@ -30,6 +32,14 @@ io.on('connection', function(socket){
             var cliente = cli.shift();
             var aux = 'call'+cliente.email;
             console.log(aux);
+            var obj = new Object();
+            obj.cliente = cliente;
+            obj.entregador = data;
+            obj.status = 0;
+            objaux = obj;
+            var connection = app.config.connection;
+            var model_ent = new app.app.models.model_postEnt(connection);
+            model_ent.insertEnt(obj);
             socket.broadcast.emit(aux, data);
             socket.emit('confirmEntregador', cliente);
         }
@@ -42,6 +52,14 @@ io.on('connection', function(socket){
             var entregador = ent.shift();
             var aux = 'call'+entregador;
             console.log(aux);
+            var obj = new Object();
+            obj.cliente = data;
+            obj.entregador = entregador;
+            obj.status = 0;
+            objaux = obj;
+            var connection = app.config.connection;
+            var model_ent = new app.app.models.model_postEnt(connection);
+            model_ent.insertEnt(obj);
             socket.broadcast.emit(aux, data);
             socket.emit('confirmCliente', entregador);
         }
