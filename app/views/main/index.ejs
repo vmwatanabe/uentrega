@@ -33,6 +33,7 @@
         <div class="row">
             <div class="col-sm">
                 <h1>Precisa de uma entrega?</h1>
+                <div id="containerCli">
                 <form>
                     <div class="form-group">
                         <label for="addressUsu">Digite o local em que o pedido será buscado</label>
@@ -42,8 +43,10 @@
                         <label for="addressUsu2">Digite o local em que o pedido será entregue</label>
                         <input type="text" class="form-control" id="addressUsu2">
                     </div>
-                    <button type="submit" class="btn btn-primary">Peça um motorista!</button>
+                    <button type="button" id="pedirMotorista" data-email="<%=session.email%>" class="btn btn-primary">Peça um motorista!</button>
                 </form>
+                <div id="containerVerifica"></div>
+                </div>
             </div>
             <div class="col-sm">
                 <h1>Seu histórico de pedidos</h1>
@@ -60,7 +63,44 @@
             $('#btn_logout').on("click", function(){
                 window.location.href = '/logout';
             });
+            
         })
+    </script>
+    <script src="/socket.io/socket.io.js"></script>
+    <script>
+        var socket = io('http://localhost:3000');
+        var email = $("#pedirMotorista").attr('data-email');
+        var aux = 'call'+email;
+        console.log(aux);
+        $('#pedirMotorista').on("click", function(){
+            console.log("click");
+            socket.emit(
+                'clientePronto',
+                {email: email, end1: $('#addressUsu').val(), end2: $('#addressUsu2').val()}
+            );
+        });
+        socket.on(aux, function(data){
+            var aux = '';
+            aux += '<div> <h4 id="emailEnt">'+data+'</h4><br><h5> está a caminho!</h5></div>';
+            $('#containerCli').append(aux);
+        });
+        
+        socket.on('confirmCliente', function(data){
+            var aux = '';
+            aux += '<div> <h4>'+data+'</h4><br><h5> está a caminho!</h5></div>';
+            $('#containerCli').append(aux);
+        });
+        socket.on('arrive'+email, function(){
+            var aux = '<div> <button type="button" class="btn btn-primary" id="clienteConfirma">O entregador chegou ao endereço</button> <button id="clienteCancela" type="button" class="btn btn-primary">Cancelar viagem</button> </div>'
+            $('#containerVerifica').append(aux);
+        });
+        $('body').delegate("#clienteConfirma","click", function(){
+            var emailent = $('#emailEnt').text();
+            socket.emit(
+                'clienteConfirmou',
+                emailent
+            );
+        });
     </script>
 </body>
 </html>

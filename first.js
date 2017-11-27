@@ -14,16 +14,49 @@ var io = require('socket.io').listen(server);
 
 app.set('io', io);
 
+var cli = [];
+var ent = [];
+
 io.on('connection', function(socket){
     console.log("Usuário conectado.");
     socket.on('disconnect', function(){
         console.log('Usuário desconectado.');
     });
     socket.on('entregadorPronto', function(data){
-        console.log("ayy");
-        app.get('io').emit(
-            'teste',
-            'data'
-        );
+        console.log("entregador pronto");
+        if (cli.length == 0){    
+            ent.push(data);
+        }else{
+            var cliente = cli.shift();
+            var aux = 'call'+cliente.email;
+            console.log(aux);
+            socket.broadcast.emit(aux, data);
+            socket.emit('confirmEntregador', cliente);
+        }
+    });
+    socket.on('clientePronto', function(data){
+        console.log("cliente pronto");
+        if (ent.length == 0){
+            cli.push(data);
+        }else{
+            var entregador = ent.shift();
+            var aux = 'call'+entregador;
+            console.log(aux);
+            socket.broadcast.emit(aux, data);
+            socket.emit('confirmCliente', entregador);
+        }
+
+        //socket.emit('confirmaEntrega', data);
+    })
+
+    socket.on('entregadorChegou', function(data){
+        console.log('entregador chegou');
+        var aux = 'arrive'+data;
+        socket.broadcast.emit(aux, data);
+    });
+    socket.on('clienteConfirmou', function(data){
+        console.log('cliente confirmou chegou');
+        var aux = 'confirm'+data;
+        socket.broadcast.emit(aux, data);
     });
 });

@@ -33,9 +33,11 @@
         <div class="row">
             <div class="col-sm">
                 <h1>Deseja fazer uma entrega?</h1>
+                <div id="containerEnt">
                 <form>
                     <button type="button" id="readyEntregador" class="btn btn-primary" data-email="<%=session.email%>">Estou pronto!</button>
                 </form>
+                </div>
             </div>
         </div>
     </div>
@@ -54,15 +56,38 @@
     <script src="/socket.io/socket.io.js"></script>
     <script>
         var socket = io('http://localhost:3000');
+        var email = $(readyEntregador).attr('data-email');
+        var aux = 'call'+email;
+        console.log(aux);
+        
         $('#readyEntregador').on("click", function(){
             console.log("click");
+            $(event.target).attr("disabled", true);
             socket.emit(
                 'entregadorPronto',
-                'aeae'
+                email
             );
         });
-        socket.on('teste', function(data){
-            alert(data);
+        socket.on(aux, function(data){
+            var aux = '';
+            aux += '<div> <h4 id="emailCli">'+data.email+'</h4> <br> <h5>Partida: '+data.end1+'</h5><br><h5>Chegada: '+data.end2+'</h5><br><button type="button" class="btn btn-primary" id="entregadorChegou">Cheguei no endereço</button> <button id="entregadorCancelou" type="button" class="btn btn-primary">Cancelar viagem</button></div>';
+            $('#containerEnt').append(aux);
+        });
+        
+        socket.on('confirmEntregador', function(data){
+            var aux = '';
+            aux += '<div> <h4 id="emailCli">'+data.email+'</h4> <br> <h5>Partida: '+data.end1+'</h5><br><h5>Chegada: '+data.end2+'</h5><br><button type="button" class="btn btn-primary" id="entregadorChegou">Cheguei no endereço</button> <button id="entregadorCancelou" type="button" class="btn btn-primary">Cancelar viagem</button></div>';
+            $('#containerEnt').append(aux);
+        });
+        $('body').delegate("#entregadorChegou","click", function(){
+            var emailcli = $('#emailCli').text();
+            socket.emit(
+                'entregadorChegou',
+                emailcli
+            );
+        });
+        socket.on('confirm'+email, function(data){
+            alert("cliente confirmou");
         });
     </script>
 </body>

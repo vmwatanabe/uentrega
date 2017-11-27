@@ -3,6 +3,7 @@ module.exports = function(app){
         if (req.session.auth){
             var session = new Object();
             session.name = req.session.name;
+            session.email = req.session.email;
             res.render("main/index", {session: session});
         }
         else

@@ -3,7 +3,7 @@ module.exports = function(app){
         if (req.session.auth && req.session.entregador){
             var session = new Object();
             session.name = req.session.name;
-
+            session.email = req.session.email;
             
             
 
